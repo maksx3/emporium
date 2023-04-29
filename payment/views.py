@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 import stripe
@@ -18,14 +20,15 @@ def BasketView(request):
     total = total.replace('.', '')
     total = int(total)
 
-    stripe.api_key = 'sk_test_ZTe1Obpsr1fyjLpJCIR4QRDK00aO4DgGMM'
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     intent = stripe.PaymentIntent.create(
         amount=total,
         currency='gbp',
         metadata={'userid': request.user.id}
     )
 
-    return render(request, 'payment/home.html', {'client_secret': intent.client_secret})
+    return render(request, 'payment/payment_form.html', {'client_secret': intent.client_secret,
+                                                            'STRIPE_PUBLISHABLE_KEY': os.environ.get('STRIPE_PUBLISHABLE_KEY')})
 
 def order_placed(request):
     basket = Basket(request)

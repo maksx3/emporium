@@ -143,3 +143,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Basket session ID
 BASKET_SESSION_ID = 'basket'
+
+os.environ.setdefault('STRIPE_PUBLISHABLE_KEY', 'pk_test_hscP61EfoprCXubfXo6GvcZV004INclpov')
+STRIPE_SECRET_KEY = 'sk_test_ZTe1Obpsr1fyjLpJCIR4QRDK00aO4DgGMM'
